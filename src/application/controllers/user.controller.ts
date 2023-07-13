@@ -1,15 +1,47 @@
-import { Controller, Post, Body } from '@nestjs/common';
-import { User } from 'src/domain/entities/user';
-import { Context } from 'vm';
-import { CreateUserDto } from '../dto/User/create-user.dto';
-import { UserService } from '../../domain/services/user.service';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpException,
+  HttpStatus,
+  Get,
+  Param,
+} from "@nestjs/common";
+import { User } from "src/domain/entities/user";
+import { Context } from "vm";
+import { CreateUserDto } from "../dto/User/create-user.dto";
+import { UserService } from "../../domain/services/user.service";
+import { CreateUserUseCase } from "../useCases/user/createUser.use-case";
+import { GetUserUseCase } from "../useCases/user/getUser.use-case";
 
-@Controller()
+@Controller("users")
 export default class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly createUserUseCase: CreateUserUseCase,
+    private readonly getUserUseCase: GetUserUseCase
+  ) {}
 
-  @Post('/create')
+  @Post()
   async create(@Body() user: CreateUserDto): Promise<User> {
-    return await this.userService.create(user);
+    try {
+      return await this.createUserUseCase.execute(user);
+    } catch (error) {
+      throw new HttpException(
+        "Une erreur est survenue",
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
+
+  @Get()
+  async get(@Param() userId: string): Promise<User> {
+    try {
+      return await this.getUserUseCase.execute(userId);
+    } catch (error) {
+      throw new HttpException(
+        "Une erreur est survenue",
+        HttpStatus.INTERNAL_SERVER_ERROR
+      );
+    }
   }
 }
