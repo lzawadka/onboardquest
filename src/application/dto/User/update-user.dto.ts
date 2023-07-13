@@ -1,39 +1,39 @@
 import { IsNotEmpty, IsString, IsNumber } from "class-validator";
 
-export class CreateUserDto {
+export class UpdateUserDto {
   @IsString()
   @IsNotEmpty()
-  firstName: string;
+  firstName?: string;
 
   @IsString()
   @IsNotEmpty()
-  lastName: string;
+  lastName?: string;
 
   @IsString()
   @IsNotEmpty()
-  email: string;
+  email?: string;
 
   @IsString()
   @IsNotEmpty()
-  password: string;
+  password?: string;
 
   @IsNumber()
   @IsNotEmpty()
-  companyId: string;
+  companyId?: string;
 
   @IsString()
   @IsNotEmpty()
-  role: string;
+  role?: string;
 
   @IsNumber()
   @IsNotEmpty()
-  currentChapterId: number;
+  currentChapterId?: number;
 
   @IsNumber()
   @IsNotEmpty()
-  currentChapterStepId: number;
+  currentChapterStepId?: number;
 
-  @IsNumber()
+  @IsNumber({}, { each: true })
   @IsNotEmpty()
-  validatedChapterId: number[];
+  validatedChapterId?: number[];
 }

@@ -1,6 +1,8 @@
+import { Injectable } from "@nestjs/common";
 import { User } from "src/domain/entities/user";
-import { IUserService } from "src/domain/interfaces/IUserService";
+import { IUserService } from "src/domain/interfaces/services/IUserService";
 
+@Injectable()
 export class GetUserUseCase {
   constructor(private userService: IUserService) {}
 
