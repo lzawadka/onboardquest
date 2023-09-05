@@ -1,4 +1,4 @@
-import { DocumentationContentType } from './documentationContentType';
+import { DocumentationContentType } from "./documentationContentType";
 
 export class DocumentationContent {
   readonly _id?: number;
